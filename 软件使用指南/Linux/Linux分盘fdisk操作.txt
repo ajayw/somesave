@@ -1,0 +1,143 @@
+以 /dev/sda 设备为例，来讲解如何用 fdisk 来操作添加、删
+
+除分区等动作；
+
+1、fdisk 的说明；
+
+当我们通过 fdisk 设备，进入相应设备的操作时，会发现有如下的提示；以 fdisk /dev/sda
+
+设备为例，以下同；
+
+[root@localhost beinan]# fdisk /dev/sda
+
+Command (m for help): 在这里按 m ，就会输出帮助；
+
+Command action
+
+a toggle a bootable flag
+
+b edit bsd disklabel
+
+c toggle the dos compatibility flag
+
+d delete a partition 注：这是删除一个分区的动作；
+
+l list known partition types 注：l 是列出分区类型，以供我们设置相应分区的类型；
+
+m print this menu 注：m 是列出帮助信息；
+
+n add a new partition 注：添加一个分区；
+
+o create a new empty DOS partition table
+
+p print the partition table 注：p 列出分区表；
+
+q quit without saving changes 注：不保存退出；
+
+s create a new empty Sun disklabel
+
+t change a partition's system id 注：t 改变分区类型；
+
+u change display/entry units
+
+v verify the partition table
+
+w write table to disk and exit 注：把分区表写入硬盘并退出；
+
+x extra functionality (experts only) 注：扩展应用，专家功能；
+
+其实我们常用的只有注有中文的，其它的功能我们不常用（呵，主要是我不会用，否则早会
+
+卖弄一下了）；x 扩展功能，也不是常用的；一般的情况下只要懂得 d l m p q t w 就行
+
+了；
+
+下面以实例操作来详述，没有例子没有办法就，新手也看不懂；
+
+2、列出当前操作硬盘的分区情况，用 p；
+
+Command (m for help): p
+
+Disk /dev/sda: 1035 MB, 1035730944 bytes
+
+256 heads, 63 sectors/track, 125 cylinders
+
+Units = cylinders of 16128 * 512 = 8257536 bytes
+
+Device Boot Start End Blocks Id System
+
+/dev/sda1 1 25 201568+ c W95 FAT32 (LBA)
+
+/dev/sda2 26 125 806400 5 Extended
+
+/dev/sda5 26 50 201568+ 83 Linux
+
+/dev/sda6 51 76 200781 83 Linux
+
+3、通过 fdisk 的 d 指令来删除一个分区；
+
+Command (m for help): p 注：列出分区情况；
+
+Disk /dev/sda: 1035 MB, 1035730944 bytes
+
+256 heads, 63 sectors/track, 125 cylinders
+
+Units = cylinders of 16128 * 512 = 8257536 bytes
+
+Device Boot Start End Blocks Id System
+
+/dev/sda1 1 25 201568+ c W95 FAT32 (LBA)
+
+/dev/sda2 26 125 806400 5 Extended
+
+/dev/sda5 26 50 201568+ 83 Linux
+
+/dev/sda6 51 76 200781 83 Linux
+
+Command (m for help): d 注：执行删除分区指定；
+
+Partition number (1-6): 6 注：我想删除 sda6 ，就在这里输入 6 ；
+
+Command (m for help): p 注：再查看一下硬盘分区情况，看是否删除了？
+
+Disk /dev/sda: 1035 MB, 1035730944 bytes
+
+256 heads, 63 sectors/track, 125 cylinders
+
+Units = cylinders of 16128 * 512 = 8257536 bytes
+
+Device Boot Start End Blocks Id System
+
+/dev/sda1 1 25 201568+ c W95 FAT32 (LBA)
+
+/dev/sda2 26 125 806400 5 Extended
+
+/dev/sda5 26 50 201568+ 83 Linux
+
+Command (m for help):
+
+警告：删除分区时要小心，请看好分区的序号，如果您删除了扩展分区，扩展分区之下的逻
+
+辑分区都会删除；所以操作时一定要小心；如果知道自己操作错了，请不要惊慌，用 q 不保
+
+存退出；切记切记！！！！在分区操作错了之时，千万不要输入 w 保存退出！！！
+
+4、通过 fdisk 的 n 指令增加一个分区；
+
+Command (m for help): p
+
+Disk /dev/sda: 1035 MB, 1035730944 bytes
+
+256 heads, 63 sectors/track, 125 cylinders
+
+Units = cylinders of 16128 * 512 = 8257536 bytes
+
+Device Boot Start End Blocks Id System
+
+/dev/sda1 1 25 201568+ c W95 FAT32 (LBA)
+
+/dev/sda2 26 125 806400 5 Extended
+
+/dev/sda5 26 50 201568+ 83 Linux
+
+Command (m for help): n 注：增加一个分区；
